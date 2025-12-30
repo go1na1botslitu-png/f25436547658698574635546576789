@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="icon.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новогодний привет для лучших друзей!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="snow-container"></div>
+    
+    <!-- ОПРОСНИК (МОДАЛЬНОЕ ОКНО) -->
+    <div id="quiz-modal" class="modal">
+        <div class="modal-content">
+            <div class="quiz-header">
+                <h2>✨ НОВОГОДНИЙ ОПРОСНИК ДЛЯ СТУДЕНТОВ 💫</h2>
+                <p>Узнай, какой ты тип студента в Новый Год!</p>
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span id="progress-text">Вопрос 1 из 4</span>
+                </div>
+            </div>
+            
+            <div class="quiz-container">
+                <div class="quiz-step active" id="step-1">
+                    <h3>Как ты обычно встречаешь Новый Год?</h3>
+                    <div class="options-grid">
+                        <button class="quiz-option" data-value="love">🍺 Уже в говно к полуночи</button>
+                        <button class="quiz-option" data-value="care">📚 Учу билеты к сессии</button>
+                        <button class="quiz-option" data-value="wisdom">😏 Ищу, с кем бы потрахаться</button>
+                        <button class="quiz-option" data-value="support">😴 Сплю, похуй на всё</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-step" id="step-2">
+                    <h3>Что ты делаешь 1 января?</h3>
+                    <div class="options-grid">
+                        <button class="quiz-option" data-value="cook">🤮 Лечу от похмелья</button>
+                        <button class="quiz-option" data-value="decorate">🍾 Продолжаю бухать</button>
+                        <button class="quiz-option" data-value="create">📖 Учу, пока все бухают</button>
+                        <button class="quiz-option" data-value="organize">🙏 Клянусь, что больше не буду</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-step" id="step-3">
+                    <h3>Твоё новогоднее обещание?</h3>
+                    <div class="options-grid">
+                        <button class="quiz-option" data-value="harmony">🚫 Бросить пить (не выполню)</button>
+                        <button class="quiz-option" data-value="laughter">🏃 Начать учиться (не начну)</button>
+                        <button class="quiz-option" data-value="tradition">💼 Сдать сессию (хз как)</button>
+                        <button class="quiz-option" data-value="warmth">😎 Ничего не менять (идеально)</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-step" id="step-4">
+                    <h3>Как ты готовишься к сессии?</h3>
+                    <div class="options-grid">
+                        <button class="quiz-option" data-value="session1">🤯 В ночь перед экзаменом</button>
+                        <button class="quiz-option" data-value="session2">😎 Во время пары</button>
+                        <button class="quiz-option" data-value="session3">🤝 Списываю у соседа</button>
+                        <button class="quiz-option" data-value="session4">🙈 Молюсь богам</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-navigation">
+                    <button id="prev-btn" class="nav-btn">
+                        <img src="left-arrow_2.png" alt="Назад" width="24" height="24">
+                    </button>
+                    <button id="next-btn" class="nav-btn">
+                        <img src="right-arrow_2.png" alt="Вперед" width="24" height="24">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <div class="container hidden" id="main-content">
+        <!-- ОГРОМНОЕ ПОЗДРАВЛЕНИЕ ДЛЯ ДРУЗЕЙ -->
+        <div class="greeting-box">
+            <h1>С Новым 2026 Годом, Банда!</h1>
+            <div class="message">Дорогие мои уёбки, братаны, кореши и просто хорошие люди!</div>
+            <div class="name">ВЫ — ЛУЧШИЕ!</div>
+            
+            <div class="decoration">
+                <div class="ornament">🍺</div>
+                <div class="ornament">🎉</div>
+                <div class="ornament">🔥</div>
+                <div class="ornament">💥</div>
+                <div class="ornament">🎊</div>
+            </div>
+            
+            <div class="year">2026</div>
+            
+            <div class="wishes">
+                <p>Блядь, ещё один год пролетел как сумасшедший! Помните, как мы в прошлом году 
+                обещали "больше не пить", "начать заниматься спортом" и "быть продуктивными"? 
+                Ага, нихуя не вышло! И слава богу! Потому что с вами даже самый ебучий провал 
+                превращается в легендарную историю!</p>
+                
+                <p>Спасибо, суки, за каждую пьяную ночь, которую мы не помним, но о которой нам 
+                рассказывали утром. За каждую идиотскую идею, которую мы реализовывали в 3 часа 
+                ноти. За то, что вы есть, когда всё идет по пизде, и когда всё хуёво — вы делаете 
+                это хотя бы весело!</p>
+                
+                <p>За все эти "давай на пятерых", "я только на чуть-чуть", "бля, уже утро?", 
+                "кто разбил вазу?", "где мои ключи?", "а давайте в Крым!", "хуй там, давайте 
+                в Сочи!", "а похуй, давайте просто выпьем!"</p>
+                
+                <p>Вы — те псины, без которых моя жизнь была бы правильной, скучной и 
+                предсказуемой. А кому нахуй нужна правильность, когда можно с вами устроить 
+                адский трэш на чьей-то даче, спалить шашлык до углей, но всё равно говорить, 
+                что это был лучший шашлык в жизни?</p>
+                
+                <p>Пусть в 2026 году у нас будет больше поводов для дикого смеха, меньше 
+                причин для грусти, больше денег на всякую хуйню, меньше похмелья (хотя кто 
+                я шучу, это невозможно), больше приключений, которые мы будем вспоминать 
+                до старости, и меньше ситуаций, когда нам придется звонить "тому парню" 
+                чтобы нас вытащили из ментовки.</p>
+                
+                <p>Желаю вам, пидоры, чтобы в новом году ваши мечты сбывались, даже самые 
+                бредовые. Чтобы работа не ебала мозг, чтобы любовь была горячей как перец, 
+                чтобы здоровье позволяло нам продолжать наши безумства, и чтобы мы всегда 
+                находили повод собраться и устроить пиздец!</p>
+                
+                <p>Люблю вас, мудаки! Вы — моя вторая семья, моя психушка, моя опора и моё 
+                вечное оправдание для всех плохих решений! С Новым Годом, ёпта!</p>
+                
+                <p style="font-size: 1.5rem; color: #ff5555; margin-top: 30px;">
+                P.S. Если в 2026 мы не встретимся хотя бы 50 раз — я вам всем ебальники 
+                понабиваю! 🖕❤️
+                </p>
+            </div>
+        </div>
+
+        <!-- РЕЗУЛЬТАТЫ ОПРОСНИКА -->
+        <section id="quiz-result" class="quiz-result hidden">
+            <div class="result-header">
+                <h2>Твой новогодний тип студента</h2>
+                <div class="result-icon" id="result-icon">✨</div>
+            </div>
+            <div class="result-content">
+                <h3 id="result-title">Ты — ...</h3>
+                <div class="result-description">
+                    <p><strong>Твоя сверхспособность:</strong> ...</p>
+                    <p><strong>Твоя миссия:</strong> ...</p>
+                    <p><strong>Секретное умение:</strong> ...</p>
+                    <p><strong>Отношение к сессии:</strong> ...</p>
+                </div>
+                <div class="result-stats">
+                    <div class="stat">
+                        <span class="stat-label">Уровень алкаша:</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="cringe-level"></div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Уровень веселья:</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="spirit-level"></div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Шанс сдать сессию:</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" id="session-level"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- МЕМОГЕНЕРАТОР С МАТОМ -->
+        <div class="meme-generator-container">
+            <div class="meme-header">
+                <h2>💖 НОВОГОДНИЙ МЕМОГЕНЕРАТОР С МАТОМ</h2>
+                <p>Создай мем для своих друзей-пидоров!</p>
+            </div>
+            
+            <div class="image-selector">
+                <div class="image-grid">
+                    <div class="image-option" data-image="putin.webp" data-color="#FFB6C1">
+                        <div class="color-box" style="background-color: #FFB6C1;"></div>
+                        <span>Новогоднее</span>
+                    </div>
+                    <div class="image-option" data-image="ded_moroz.webp" data-color="#DDA0DD">
+                        <div class="color-box" style="background-color: #DDA0DD;"></div>
+                        <span>Дед Мороз</span>
+                    </div>
+                    <div class="image-option" data-image="elka.webp" data-color="#98FB98">
+                        <div class="color-box" style="background-color: #98FB98;"></div>
+                        <span>Ёлка</span>
+                    </div>
+                    <div class="image-option" data-image="snegovik.webp" data-color="#87CEEB">
+                        <div class="color-box" style="background-color: #87CEEB;"></div>
+                        <span>Снеговик</span>
+                    </div>
+                    <div class="image-option" data-image="shampanskoe.webp" data-color="#FFFF00">
+                        <div class="color-box" style="background-color: #FFFF00;"></div>
+                        <span>Шампанское</span>
+                    </div>
+                    <div class="image-option" data-image="kot.webp" data-color="#FFA500">
+                        <div class="color-box" style="background-color: #FFA500;"></div>
+                        <span>Кот</span>
+                    </div>
+                    <div class="image-option" data-image="fireworks.webp" data-color="#FF69B4">
+                        <div class="color-box" style="background-color: #FF69B4;"></div>
+                        <span>Фейерверк</span>
+                    </div>
+                    <div class="image-option custom-image" data-color="#0000FF">
+                        <div class="color-box" style="background-color: #0000FF;"></div>
+                        <span>Своя картинка</span>
+                        <input type="file" id="custom-image-upload" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-controls">
+                <div class="text-input-group">
+                    <input type="text" id="top-text" placeholder="Текст сверху" maxlength="32">
+                    <div class="char-count">0/32</div>
+                </div>
+                
+                <div class="text-input-group">
+                    <input type="text" id="bottom-text" placeholder="Текст снизу" maxlength="32">
+                    <div class="char-count">0/32</div>
+                </div>
+                
+                <button id="random-text" class="random-btn">
+                    <span>🎲 Случайный текст</span>
+                </button>
+            </div>
+            
+            <div class="meme-preview-container">
+                <div class="meme-preview" id="meme-preview">
+                    <div class="text-overlay top-text" id="preview-top-text"></div>
+                    <div class="meme-image" id="meme-image"></div>
+                    <div class="text-overlay bottom-text" id="preview-bottom-text"></div>
+                </div>
+            </div>
+            
+            <div class="meme-controls">
+                <button id="new-meme" class="meme-btn new-btn">
+                    <span>🔄 Новый мем</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
