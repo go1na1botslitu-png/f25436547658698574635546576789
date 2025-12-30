@@ -69,7 +69,7 @@ const predefinedUsers = [
         hikes: 22,
         altitude: 4100,
         days: 85,
-        personalSite: "users/churkina/main.html",
+        personalSite: "churkina/main.html",
         theme: "churkina"
     },
     {
