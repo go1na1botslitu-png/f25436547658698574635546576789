@@ -1,289 +1,1066 @@
-// Предустановленные пользователи с уникальным оформлением
-const predefinedUsers = [
-    {
-        firstName: "Инна",
-        lastName: "Коваленко",
-        hikes: 20,
-        altitude: 3600,
-        days: 65,
-        personalSite: "users/kovalenko/main.html",
-        theme: "kovalenko-inna"
-    },
-    {
-        firstName: "Галина",
-        lastName: "Коваленко",
-        hikes: 24,
-        altitude: 3800,
-        days: 72,
-        personalSite: "users/kovalenkog/main.html",
-        theme: "kovalenko-galina"
-    },
-    {
-        firstName: "Игорь",
-        lastName: "Стрельников",
-        hikes: 30,
-        altitude: 4500,
-        days: 95,
-        personalSite: "users/strelnikovi/main.html",
-        theme: "strelnikov-igor"
-    },
-    {
-        firstName: "Иван",
-        lastName: "Стрельников",
-        hikes: 28,
-        altitude: 4200,
-        days: 89,
-        personalSite: "users/strelnikov/main.html",
-        theme: "strelnikov"
-    },
-    {
-        firstName: "Юрий",
-        lastName: "Жолнач",
-        hikes: 28,
-        altitude: 4200,
-        days: 89,
-        personalSite: "users/zholnach/main.html",
-        theme: "zholnach"
-    },
-    {
-        firstName: "Юрий",
-        lastName: "Жёлнач",
-        hikes: 25,
-        altitude: 3900,
-        days: 75,
-        personalSite: "users/zholnach/main.html",
-        theme: "zholnach2"
-    },
-    {
-        firstName: "София",
-        lastName: "Ткаченко",
-        hikes: 18,
-        altitude: 3500,
-        days: 60,
-        personalSite: "users/tkachenko/main.html",
-        theme: "tkachenko"
-    },
-    {
-        firstName: "Евгения",
-        lastName: "Чуркина",
-        hikes: 22,
-        altitude: 4100,
-        days: 85,
-        personalSite: "users/churkina/main.html",
-        theme: "churkina"
-    },
-    {
-        firstName: "Ирина",
-        lastName: "Загдай",
-        hikes: 19,
-        altitude: 3800,
-        days: 67,
-        personalSite: "users/zagdai/main.html",
-        theme: "zagdai"
-    },
-    {
-        firstName: "Иван",
-        lastName: "Моисеев",
-        hikes: 42,
-        altitude: 5100,
-        days: 124,
-        personalSite: "users/moiseev/main.html",
-        theme: "moiseev"
-    },
-    {
-        firstName: "Александр",
-        lastName: "Медведев",
-        hikes: 15,
-        altitude: 3200,
-        days: 45,
-        personalSite: "users/medvedev/main.html",
-        theme: "medvedev"
-    },
-    {
-        firstName: "Александр",
-        lastName: "Погребняк",
-        hikes: 23,
-        altitude: 4600,
-        days: 78,
-        personalSite: "users/pogrebnyak/main.html",
-        theme: "pogrebnyak"
-    },
-    {
-        firstName: "Владимир",
-        lastName: "Савченко",
-        hikes: 31,
-        altitude: 3900,
-        days: 112,
-        personalSite: "users/savchenko/main.html",
-        theme: "savchenko"
-    },
-    {
-        firstName: "Богдан",
-        lastName: "Сесь",
-        hikes: 17,
-        altitude: 3400,
-        days: 52,
-        personalSite: "users/ses/main.html",
-        theme: "ses"
-    },
-    // Новый 15-й аккаунт для всех остальных людей
-    {
-        firstName: "Другой",
-        lastName: "Пользователь",
-        hikes: 0,
-        altitude: 0,
-        days: 0,
-        personalSite: "users/other/main.html",
-        theme: "other-user"
-    }
-];
-
-// Флаг для отслеживания использования общего аккаунта
-let isUsingGeneralAccount = false;
-
-// Создание снежинок
-function createSnowflakes() {
-    const snowContainer = document.getElementById('snow-container');
-    const snowflakeCount = 80;
-    
-    for (let i = 0; i < snowflakeCount; i++) {
-        const snowflake = document.createElement('div');
-        snowflake.classList.add('snowflake');
-        
-        const size = Math.random() * 6 + 4;
-        snowflake.style.width = `${size}px`;
-        snowflake.style.height = `${size}px`;
-        
-        snowflake.style.left = `${Math.random() * 100}vw`;
-        
-        const duration = Math.random() * 10 + 10;
-        const delay = Math.random() * 10;
-        snowflake.style.animationDuration = `${duration}s`;
-        snowflake.style.animationDelay = `${delay}s`;
-        
-        snowflake.style.opacity = Math.random() * 0.7 + 0.3;
-        
-        snowContainer.appendChild(snowflake);
-    }
-}
-
-// Инициализация приложения
-function initApp() {
-    contentContainer = document.getElementById('content-container');
-    showLoginForm();
-}
-
-// Показать форму входа
-function showLoginForm() {
-    const template = document.getElementById('login-template');
-    contentContainer.innerHTML = template.innerHTML;
-    
-    // Сброс флага
-    isUsingGeneralAccount = false;
-    
-    // Заполняем список предустановленных пользователей
-    const userList = document.getElementById('predefined-users-list');
-    userList.innerHTML = '';
-    predefinedUsers.forEach((user, index) => {
-        const userItem = document.createElement('div');
-        userItem.className = 'user-item';
-        
-        // Для 15-го аккаунта добавляем специальную пометку
-        if (index === 14) {
-            userItem.textContent = `${user.firstName} ${user.lastName} (Общий)`;
-            userItem.style.backgroundColor = 'rgba(76, 201, 240, 0.3)';
-            userItem.style.border = '1px solid rgba(76, 201, 240, 0.5)';
-            userItem.title = 'Общий аккаунт для всех новых пользователей';
-        } else {
-            userItem.textContent = `${user.firstName} ${user.lastName}`;
-        }
-        
-        userItem.addEventListener('click', () => {
-            document.getElementById('login-first-name').value = user.firstName;
-            document.getElementById('login-last-name').value = user.lastName;
-            
-            // Для общего аккаунта меняем флаг
-            if (index === 14) {
-                isUsingGeneralAccount = true;
-            }
-            
-            // Скрыть сообщение об ошибке, если оно было показано
-            document.getElementById('login-error').style.display = 'none';
-        });
-        userList.appendChild(userItem);
-    });
-    
-    // Обработчик формы входа
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const firstName = document.getElementById('login-first-name').value.trim();
-        const lastName = document.getElementById('login-last-name').value.trim();
-        
-        if (firstName && lastName) {
-            // Сначала проверяем, введены ли данные общего аккаунта
-            if (firstName === "Другой" && lastName === "Пользователь") {
-                // Немедленное перенаправление на общий сайт
-                window.location.href = "users/other/main.html";
-                return;
-            }
-            
-            // Поиск пользователя в предустановленных (первые 14 аккаунтов)
-            const specificUsers = predefinedUsers.slice(0, 14);
-            const user = specificUsers.find(user => 
-                user.firstName.toLowerCase() === firstName.toLowerCase() && 
-                user.lastName.toLowerCase() === lastName.toLowerCase()
-            );
-            
-            if (user) {
-                // Немедленное перенаправление на персональный сайт пользователя
-                window.location.href = user.personalSite;
-            } else {
-                // Для всех остальных - используем 15-й аккаунт
-                window.location.href = "users/other/main.html";
-            }
-        } else {
-            alert('Пожалуйста, заполните все поля формы.');
-        }
-    });
-    
-    // Автоматический выбор общего аккаунта при пустом вводе и фокусе
-    const firstNameInput = document.getElementById('login-first-name');
-    const lastNameInput = document.getElementById('login-last-name');
-    
-    firstNameInput.addEventListener('focus', function() {
-        if (!this.value && !lastNameInput.value) {
-            document.getElementById('login-error').style.display = 'none';
-        }
-    });
-    
-    lastNameInput.addEventListener('focus', function() {
-        if (!this.value && !firstNameInput.value) {
-            document.getElementById('login-error').style.display = 'none';
-        }
-    });
-}
-
-// Показать страницу "нет аккаунта"
-function showNoAccountPage() {
-    const template = document.getElementById('no-account-template');
-    contentContainer.innerHTML = template.innerHTML;
-    
-    // Обработчик кнопки "Вернуться ко входу"
-    document.getElementById('go-to-login').addEventListener('click', function() {
-        showLoginForm();
-    });
-}
-
-// Инициализация приложения после загрузки DOM
 document.addEventListener('DOMContentLoaded', function() {
-    createSnowflakes();
-    initApp();
-    
-    // Обновление снежинок при изменении размера окна
-    window.addEventListener('resize', function() {
-        const snowContainer = document.getElementById('snow-container');
-        snowContainer.innerHTML = '';
-        createSnowflakes();
-    });
+	createSnowflakes();
+	
+	const elements = document.querySelectorAll('.greeting-box > *');
+	elements.forEach((element, index) => {
+		element.style.opacity = '0';
+		element.style.transform = 'translateY(20px)';
+		element.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+		
+		setTimeout(() => {
+			element.style.opacity = '1';
+			element.style.transform = 'translateY(0)';
+		}, 100);
+	});
+	
+	initGallery();
+	initQuiz();
+	initMemeGenerator();
 });
+
+function createSnowflakes() {
+	const snowContainer = document.getElementById('snow-container');
+	const snowflakeCount = 200;
+	
+	for (let i = 0; i < snowflakeCount; i++) {
+		const snowflake = document.createElement('div');
+		snowflake.classList.add('snow');
+		
+		const size = Math.random() * 8 + 2;
+		snowflake.style.width = `${size}px`;
+		snowflake.style.height = `${size}px`;
+		
+		snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+		
+		snowflake.style.left = `${Math.random() * 100}vw`;
+		
+		const randomX = (Math.random() - 0.5) * 100;
+		snowflake.style.setProperty('--random-x', `${randomX}px`);
+		
+		const duration = Math.random() * 20 + 10;
+		
+		const delay = Math.random() * 5;
+		
+		snowflake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
+		
+		const flickerDelay = Math.random() * 5;
+		snowflake.style.animation += `, flicker ${Math.random() * 3 + 2}s ease-in-out ${flickerDelay}s infinite alternate`;
+		
+		snowContainer.appendChild(snowflake);
+	}
+}
+
+const style = document.createElement('style');
+style.textContent = `
+	@keyframes flicker {
+		0%, 100% { opacity: var(--opacity); }
+		50% { opacity: calc(var(--opacity) * 0.5); }
+	}
+`;
+document.head.appendChild(style);
+
+function initGallery() {
+	const slides = document.querySelectorAll('.gallery-slide');
+	const prevButton = document.querySelector('.gallery-nav.prev');
+	const nextButton = document.querySelector('.gallery-nav.next');
+	const gallerySlides = document.querySelector('.gallery-slides');
+	const galleryContainer = document.querySelector('.gallery-container');
+	let currentSlide = 0;
+	const totalSlides = slides.length;
+	let touchStartX = 0;
+	let touchEndX = 0;
+	let autoSlideInterval = null;
+	let interactionTimer = null;
+	const AUTO_SLIDE_INTERVAL = 5000;
+	const INTERACTION_TIMEOUT = 10000;
+
+	const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+	function startAutoSlide() {
+		if (isMobile) return;
+		
+		clearInterval(autoSlideInterval);
+		autoSlideInterval = setInterval(() => {
+			currentSlide = (currentSlide + 1) % totalSlides;
+			showSlide(currentSlide);
+		}, AUTO_SLIDE_INTERVAL);
+	}
+
+	function stopAutoSlide() {
+		clearInterval(autoSlideInterval);
+	}
+
+	function resetInteractionTimer() {
+		if (isMobile) return;
+		
+		clearTimeout(interactionTimer);
+		interactionTimer = setTimeout(() => {
+			startAutoSlide();
+		}, INTERACTION_TIMEOUT);
+	}
+
+	function handleUserInteraction() {
+		if (isMobile) return;
+		stopAutoSlide();
+		resetInteractionTimer();
+	}
+
+	function showSlide(index) {
+		slides.forEach(slide => {
+			slide.classList.remove('active');
+		});
+		slides[index].classList.add('active');
+		currentSlide = index;
+		
+		if (isMobile) {
+			gallerySlides.scrollTo({
+				left: index * gallerySlides.offsetWidth,
+				behavior: 'smooth'
+			});
+		}
+	}
+
+	prevButton.addEventListener('click', () => {
+		currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+		showSlide(currentSlide);
+		handleUserInteraction();
+	});
+
+	nextButton.addEventListener('click', () => {
+		currentSlide = (currentSlide + 1) % totalSlides;
+		showSlide(currentSlide);
+		handleUserInteraction();
+	});
+
+	gallerySlides.addEventListener('touchstart', (e) => {
+		touchStartX = e.changedTouches[0].screenX;
+	});
+
+	gallerySlides.addEventListener('touchend', (e) => {
+		touchEndX = e.changedTouches[0].screenX;
+		handleSwipe();
+	});
+
+	function handleSwipe() {
+		const swipeThreshold = 50;
+		const diff = touchStartX - touchEndX;
+		
+		if (Math.abs(diff) > swipeThreshold) {
+			if (diff > 0) {
+				currentSlide = (currentSlide + 1) % totalSlides;
+			} else {
+				currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+			}
+			showSlide(currentSlide);
+		}
+	}
+
+	if (!isMobile) {
+		startAutoSlide();
+	}
+
+	if (!isMobile) {
+		galleryContainer.addEventListener('mouseenter', () => {
+			stopAutoSlide();
+		});
+
+		galleryContainer.addEventListener('mouseleave', () => {
+			if (!interactionTimer) {
+				startAutoSlide();
+			}
+		});
+	}
+
+	const galleryElements = document.querySelectorAll('.gallery-container > *');
+	galleryElements.forEach((element, index) => {
+		element.style.opacity = '0';
+		element.style.transform = 'translateY(30px)';
+		element.style.transition = `opacity 0.8s ease ${index * 0.2}s, transform 0.8s ease ${index * 0.2}s`;
+		setTimeout(() => {
+			element.style.opacity = '1';
+			element.style.transform = 'translateY(0)';
+		}, 500);
+	});
+
+	window.addEventListener('beforeunload', () => {
+		clearInterval(autoSlideInterval);
+		clearTimeout(interactionTimer);
+	});
+
+	showSlide(currentSlide);
+	
+	if (isMobile) {
+		prevButton.style.display = 'none';
+		nextButton.style.display = 'none';
+	}
+}
+
+function initQuiz() {
+	const modal = document.getElementById('quiz-modal');
+	const quizSteps = document.querySelectorAll('.quiz-step');
+	const options = document.querySelectorAll('.quiz-option');
+	const nextBtn = document.getElementById('next-btn');
+	const prevBtn = document.getElementById('prev-btn');
+	const progressFill = document.getElementById('progress-fill');
+	const progressText = document.getElementById('progress-text');
+	const resultSection = document.getElementById('quiz-result');
+	const mainContent = document.getElementById('main-content');
+	
+	let currentStep = 0;
+	const answers = [null, null, null];
+	const totalSteps = 3;
+	
+	const roles = {
+		'magic-salad-tree': {
+			title: 'Танцующая Фея!',
+			icon: '💃✨',
+			description: 'Ты превращаешь любую вечеринку в волшебный бал. Твоя миссия — зажечь танцпол и научить всех двигаться грациозно. Танцевать так, чтобы даже стены пускались в пляс.',
+			cringe: 25,
+			spirit: 95
+		},
+		'magic-salad-sparkler': {
+			title: 'Огненная Дива!',
+			icon: '🔥💃',
+			description: 'Твои движения зажигают сердца. Твоя миссия — сделать танец самым запоминающимся моментом вечера. Танцевать с такой энергией, что искры разлетаются во все стороны.',
+			cringe: 30,
+			spirit: 90
+		},
+		'magic-salad-champagne': {
+			title: 'Шампанская Принцесса!',
+			icon: '🥂👑',
+			description: 'Ты танцуешь с бокалом шампанского, не проливая ни капли. Твоя миссия — привнести элегантность в любое празднование. Делать каждый танец изысканным и утонченным.',
+			cringe: 20,
+			spirit: 88
+		},
+		'magic-salad-tangerine': {
+			title: 'Цитрусовая Искрица!',
+			icon: '🍊✨',
+			description: 'Твои танцы бодрят, как аромат мандаринов. Твоя миссия — зарядить всех позитивной энергией. Вплетать в танец элементы неожиданности и радости.',
+			cringe: 22,
+			spirit: 92
+		},
+		'magic-hug-tree': {
+			title: 'Обнимательная Фея!',
+			icon: '🎄🤗',
+			description: 'Ты обнимаешь всех на танцполе, создавая атмосферу тепла. Твоя миссия — чтобы никто не чувствовал себя одиноким. Превращать объятия в часть танцевальной импровизации.',
+			cringe: 18,
+			spirit: 94
+		},
+		'magic-hug-sparkler': {
+			title: 'Искрящаяся Душа!',
+			icon: '✨🤗',
+			description: 'Твои объятия согревают даже в самый холодный вечер. Твоя миссия — распространять доброту через физический контакт. Обнимать так, чтобы человек чувствовал себя особенным.',
+			cringe: 24,
+			spirit: 89
+		},
+		'magic-hug-champagne': {
+			title: 'Шампанское Объятие!',
+			icon: '🥂🤗',
+			description: 'Ты обнимаешь, держа в руке бокал, и делишься позитивом. Твоя миссия — создавать праздничное настроение через тепло объятий. Сочетать элегантность с душевностью.',
+			cringe: 26,
+			spirit: 87
+		},
+		'magic-hug-tangerine': {
+			title: 'Мандариновое Тепло!',
+			icon: '🍊🤗',
+			description: 'Твои объятия пахнут новогодними мандаринами. Твоя миссия — дарить уют и ощущение праздника. Обнимать так, чтобы вспоминались самые теплые моменты.',
+			cringe: 20,
+			spirit: 91
+		},
+		'magic-tv-tree': {
+			title: 'Телевизионная Дива!',
+			icon: '📺💃',
+			description: 'Ты танцуешь перед телевизором, повторяя движения за артистами. Твоя миссия — превратить просмотр в танцевальное шоу. Угадывать следующие движения до того, как их покажут.',
+			cringe: 28,
+			spirit: 86
+		},
+		'magic-tv-sparkler': {
+			title: 'Экранная Искра!',
+			icon: '📺✨',
+			description: 'Ты заряжаешь энергией всю комнату, танцуя под телепередачи. Твоя миссия — сделать телевизор центром веселья. Синхронизировать свои движения с происходящим на экране.',
+			cringe: 32,
+			spirit: 84
+		},
+		'magic-tv-champagne': {
+			title: 'Шампанский Телезвезда!',
+			icon: '📺🥂',
+			description: 'Ты пьешь шампанское и танцуешь в такт новогодним передачам. Твоя миссия — создать атмосферу студийного праздника. Поднимать бокал за каждого выступающего артиста.',
+			cringe: 34,
+			spirit: 82
+		},
+		'magic-tv-tangerine': {
+			title: 'Цитрусовая Теледева!',
+			icon: '📺🍊',
+			description: 'Ты чистишь мандарины в такт музыке из телевизора. Твоя миссия — сочетать просмотр с новогодними ритуалами. Создавать цитрусовую атмосферу во время телеэфира.',
+			cringe: 30,
+			spirit: 80
+		},
+		'magic-social-tree': {
+			title: 'Социальная Бабочка!',
+			icon: '📱💃',
+			description: 'Ты танцуешь и сразу же публикуешь видео в соцсетях. Твоя миссия — делиться радостью с виртуальными друзьями. Делать каждый танец Instagram-достойным.',
+			cringe: 35,
+			spirit: 88
+		},
+		'magic-social-sparkler': {
+			title: 'Сверкающая Блогерша!',
+			icon: '📱✨',
+			description: 'Твои танцевальные видео собирают тысячи просмотров. Твоя миссия — вдохновлять других на движение. Создавать контент, который хочется пересматривать.',
+			cringe: 38,
+			spirit: 86
+		},
+		'magic-social-champagne': {
+			title: 'Шампанская Инфлюенсер!',
+			icon: '📱🥂',
+			description: 'Ты ведешь прямые эфиры, танцуя с бокалом шампанского. Твоя миссия — создавать праздничное настроение онлайн. Общаться с подписчиками, не прекращая танцевать.',
+			cringe: 40,
+			spirit: 84
+		},
+		'magic-social-tangerine': {
+			title: 'Цитрусовая Звезда!',
+			icon: '📱🍊',
+			description: 'Ты делаешь TikTok-видео с мандаринами в качестве реквизита. Твоя миссия — показать, как весело можно провести время. Создавать танцевальные челленджи с цитрусами.',
+			cringe: 36,
+			spirit: 85
+		},
+		'party-salad-tree': {
+			title: 'Ёлочная Зажигалка!',
+			icon: '🎄🔥',
+			description: 'Ты танцуешь вокруг ёлки, задавая темп всей вечеринке. Твоя миссия — сделать ёлку центром танцевального пространства. Украшать танцевальные движения элементами хоровода.',
+			cringe: 42,
+			spirit: 92
+		},
+		'party-salad-sparkler': {
+			title: 'Бенгальская Дискотека!',
+			icon: '✨🔥',
+			description: 'Ты танцуешь с бенгальскими огнями, создавая световое шоу. Твоя миссия — ослепить всех своим мастерством. Рисовать огнями в воздухе танцевальные фигуры.',
+			cringe: 45,
+			spirit: 90
+		},
+		'party-salad-champagne': {
+			title: 'Шампанская Вечеринка!',
+			icon: '🥂🎉',
+			description: 'Ты открываешь шампанское и сразу пускаешься в пляс. Твоя миссия — начать танцевальный марафон. Сочетать праздничные тосты с танцевальными па.',
+			cringe: 48,
+			spirit: 88
+		},
+		'party-salad-tangerine': {
+			title: 'Мандариновый Карнавал!',
+			icon: '🍊🎭',
+			description: 'Ты кидаешь мандарины в такт музыке, создавая перкуссию. Твоя миссия — превратить фрукты в музыкальные инструменты. Организовывать цитрусовые битбокс-баттлы.',
+			cringe: 44,
+			spirit: 87
+		},
+		'party-hug-tree': {
+			title: 'Обнимательный Хоровод!',
+			icon: '🤗🎄',
+			description: 'Ты организуешь хоровод с объятиями вокруг ёлки. Твоя миссия — сплотить всех гостей в танцевальном кругу. Придумывать новые движения для групповых объятий.',
+			cringe: 40,
+			spirit: 93
+		},
+		'party-hug-sparkler': {
+			title: 'Огненное Братство!',
+			icon: '🤗🔥',
+			description: 'Ты обнимаешь друзей, передавая им горящие бенгальские огни. Твоя миссия — создать цепь света через объятия. Безопасно передавать огонь в танцевальном движении.',
+			cringe: 47,
+			spirit: 89
+		},
+		'party-hug-champagne': {
+			title: 'Шампанское Единство!',
+			icon: '🤗🥂',
+			description: 'Ты обнимаешь, разливая шампанское по бокалам друзей. Твоя миссия — создать атмосферу всеобщего праздника. Делать тосты, не выпуская друзей из объятий.',
+			cringe: 50,
+			spirit: 86
+		},
+		'party-hug-tangerine': {
+			title: 'Цитрусовые Обнимашки!',
+			icon: '🤗🍊',
+			description: 'Ты обнимаешь, угощая друзей мандаринами. Твоя миссия — совместить физический контакт с угощением. Чистить мандарины одной рукой, не прерывая объятий.',
+			cringe: 43,
+			spirit: 88
+		},
+		'party-tv-tree': {
+			title: 'Телевизионный Массовик!',
+			icon: '📺🎄',
+			description: 'Ты организуешь танцы перед телевизором для всех гостей. Твоя миссия — синхронизировать движения с телепередачей. Придумывать групповые танцы под телевизионные заставки.',
+			cringe: 46,
+			spirit: 85
+		},
+		'party-tv-sparkler': {
+			title: 'Экранная Дискотека!',
+			icon: '📺✨',
+			description: 'Ты устраиваешь световое шоу в такт телевизионной музыке. Твоя миссия — дополнить телепередачу своими огнями. Создавать спецэффекты, синхронизированные с эфиром.',
+			cringe: 49,
+			spirit: 83
+		},
+		'party-tv-champagne': {
+			title: 'Теле-Шампанское!',
+			icon: '📺🥂',
+			description: 'Ты пьешь шампанское под каждую новогоднюю передачу. Твоя миссия — отметить тостом каждый телевизионный номер. Поднимать бокал в такт музыке из телевизора.',
+			cringe: 51,
+			spirit: 81
+		},
+		'party-tv-tangerine': {
+			title: 'Цитрусовый Телепраздник!',
+			icon: '📺🍊',
+			description: 'Ты кидаешь мандарины в такт заставок между передачами. Твоя миссия — сделать перерывы на рекламу веселыми. Создавать цитрусовые перкуссионные соло.',
+			cringe: 47,
+			spirit: 82
+		},
+		'party-social-tree': {
+			title: 'Социальный Организатор!',
+			icon: '📱🎄',
+			description: 'Ты ведешь прямые эфиры с танцами вокруг ёлки. Твоя миссия — показать виртуальным друзьям настоящий праздник. Интерактивно общаться с аудиторией во время танца.',
+			cringe: 52,
+			spirit: 87
+		},
+		'party-social-sparkler': {
+			title: 'Онлайн-Светошоу!',
+			icon: '📱✨',
+			description: 'Ты стримишь танцы с бенгальскими огнями для подписчиков. Твоя миссия — устроить виртуальный фейерверк. Отвечать на комментарии, не прекращая световое шоу.',
+			cringe: 55,
+			spirit: 85
+		},
+		'party-social-champagne': {
+			title: 'Шампанский Стрим!',
+			icon: '📱🥂',
+			description: 'Ты ведешь прямой эфир, танцуя с бокалом шампанского. Твоя миссия — создать атмосферу виртуальной вечеринки. Делать онлайн-тосты со своими подписчиками.',
+			cringe: 58,
+			spirit: 83
+		},
+		'party-social-tangerine': {
+			title: 'Цитрусовый Блогер!',
+			icon: '📱🍊',
+			description: 'Ты делаешь контент, танцуя с мандаринами в кадре. Твоя миссия — показать, как весело отмечать Новый год. Создавать танцевальные мемы с цитрусовыми.',
+			cringe: 54,
+			spirit: 84
+		},
+		'relax-salad-tree': {
+			title: 'Уютная Танцовщица!',
+			icon: '😴💃',
+			description: 'Ты танцуешь медленно и грациозно, создавая атмосферу уюта. Твоя миссия — показать, что танец может быть спокойным. Двигаться плавно, как снежинки за окном.',
+			cringe: 15,
+			spirit: 78
+		},
+		'relax-salad-sparkler': {
+			title: 'Медленная Искра!',
+			icon: '😴✨',
+			description: 'Твои движения плавные, но наполнены внутренним светом. Твоя миссия — танцевать, не нарушая вечерней атмосферы. Создавать танец-медитацию под тихую музыку.',
+			cringe: 18,
+			spirit: 76
+		},
+		'relax-salad-champagne': {
+			title: 'Расслабляющее Шампанское!',
+			icon: '😴🥂',
+			description: 'Ты пьешь шампанское маленькими глотками и танцуешь не спеша. Твоя миссия — наслаждаться каждым моментом праздника. Сочетать дегустацию с плавными движениями.',
+			cringe: 20,
+			spirit: 74
+		},
+		'relax-salad-tangerine': {
+			title: 'Спокойный Цитрус!',
+			icon: '😴🍊',
+			description: 'Ты чистишь мандарины медленно, в такт спокойной музыке. Твоя миссия — создать ритуал наслаждения моментом. Делать каждое движение осознанным и приятным.',
+			cringe: 16,
+			spirit: 77
+		},
+		'relax-hug-tree': {
+			title: 'Тихое Объятие!',
+			icon: '😴🤗',
+			description: 'Ты обнимаешь близких, создавая атмосферу тепла и покоя. Твоя миссия — дарить уют через физический контакт. Обнимать так, чтобы человек чувствовал себя в безопасности.',
+			cringe: 12,
+			spirit: 81
+		},
+		'relax-hug-sparkler': {
+			title: 'Теплая Искорка!',
+			icon: '😴✨',
+			description: 'Твои объятия согревают, как маленький огонек в темноте. Твоя миссия — быть источником тепла для окружающих. Передавать через объятия спокойствие и умиротворение.',
+			cringe: 17,
+			spirit: 79
+		},
+		'relax-hug-champagne': {
+			title: 'Умиротворенное Шампанское!',
+			icon: '😴🥂',
+			description: 'Ты обнимаешь, наслаждаясь бокалом шампанского. Твоя миссия — совместить физический контакт с релаксацией. Создавать атмосферу полного расслабления.',
+			cringe: 19,
+			spirit: 76
+		},
+		'relax-hug-tangerine': {
+			title: 'Спокойный Мандарин!',
+			icon: '😴🍊',
+			description: 'Ты обнимаешь, делясь ароматом свежеочищенного мандарина. Твоя миссия — создать мультисенсорный опыт покоя. Сочетать тактильные ощущения с цитрусовым ароматом.',
+			cringe: 14,
+			spirit: 80
+		},
+		'relax-tv-tree': {
+			title: 'Телевизионная Релаксация!',
+			icon: '😴📺',
+			description: 'Ты танцуешь медленно под спокойные телепередачи. Твоя миссия — превратить просмотр в медитативный опыт. Синхронизировать дыхание с движениями на экране.',
+			cringe: 21,
+			spirit: 73
+		},
+		'relax-tv-sparkler': {
+			title: 'Спокойный Телесвет!',
+			icon: '😴📺',
+			description: 'Ты смотришь телевизор, делая плавные танцевальные движения. Твоя миссия — сочетать пассивный отдых с легкой активностью. Создавать собственный телевизионный танец-медитацию.',
+			cringe: 23,
+			spirit: 71
+		},
+		'relax-tv-champagne': {
+			title: 'Расслабляющий Телепросмотр!',
+			icon: '😴📺',
+			description: 'Ты пьешь шампанское, наблюдая за телепередачами и слегка покачиваясь. Твоя миссия — наслаждаться праздником без суеты. Создавать ритуал вечернего отдыха.',
+			cringe: 25,
+			spirit: 69
+		},
+		'relax-tv-tangerine': {
+			title: 'Цитрусовый Телеотдых!',
+			icon: '😴📺',
+			description: 'Ты чистишь мандарины, смотря телевизор и делая плавные движения. Твоя миссия — совместить несколько приятных занятий. Создавать атмосферу полного релакса.',
+			cringe: 22,
+			spirit: 72
+		},
+		'relax-social-tree': {
+			title: 'Спокойный Блогер!',
+			icon: '😴📱',
+			description: 'Ты ведешь уютные прямые эфиры с медленными танцами. Твоя миссия — показать, как можно отдыхать с пользой. Создавать контент для релаксации и медитации.',
+			cringe: 26,
+			spirit: 75
+		},
+		'relax-social-sparkler': {
+			title: 'Медленная Онлайн-Искра!',
+			icon: '😴📱',
+			description: 'Ты стримишь спокойные танцы под расслабляющую музыку. Твоя миссия — помогать другим снять стресс. Делиться техниками танцевальной медитации.',
+			cringe: 28,
+			spirit: 73
+		},
+		'relax-social-champagne': {
+			title: 'Релакс Шампанское Онлайн!',
+			icon: '😴📱',
+			description: 'Ты ведешь прямые эфиры, медленно потягивая шампанское. Твоя миссия — создать виртуальную зону отдыха. Общаться с подписчиками в спокойной атмосфере.',
+			cringe: 30,
+			spirit: 71
+		},
+		'relax-social-tangerine': {
+			title: 'Цитрусовый Релакс-Блог!',
+			icon: '😴📱',
+			description: 'Ты делаешь контент о спокойном времяпрепровождении с мандаринами. Твоя миссия — пропагандировать осознанный отдых. Делиться ритуалами расслабления.',
+			cringe: 27,
+			spirit: 74
+		},
+		'chaos-salad-tree': {
+			title: 'Безумная Танцовщица!',
+			icon: '🤪💃',
+			description: 'Ты танцуешь так энергично, что сносишь всё на своём пути. Твоя миссия — превратить вечеринку в эпицентр веселья. Создавать танцевальные вихри, увлекающие всех вокруг.',
+			cringe: 65,
+			spirit: 88
+		},
+		'chaos-salad-sparkler': {
+			title: 'Огненный Ураган!',
+			icon: '🤪🔥',
+			description: 'Твои танцы с бенгальскими огнями напоминают извержение вулкана. Твоя миссия — ослепить всех своей энергией. Рисовать огнем такие фигуры, что все ахают.',
+			cringe: 70,
+			spirit: 86
+		},
+		'chaos-salad-champagne': {
+			title: 'Шампанский Тайфун!',
+			icon: '🤪🥂',
+			description: 'Ты открываешь шампанское фонтаном и танцуешь в брызгах. Твоя миссия — устроить алкогольный ливень на танцполе. Создавать пенную вечеринку своими движениями.',
+			cringe: 68,
+			spirit: 84
+		},
+		'chaos-salad-tangerine': {
+			title: 'Цитрусовый Ураган!',
+			icon: '🤪🍊',
+			description: 'Ты кидаешь мандарины во все стороны, танцуя как одержимая. Твоя миссия — превратить фрукты в снаряды веселья. Организовывать цитрусовые битвы в такт музыке.',
+			cringe: 66,
+			spirit: 85
+		},
+		'chaos-hug-tree': {
+			title: 'Обнимательный Торнадо!',
+			icon: '🤪🤗',
+			description: 'Ты обнимаешь всех подряд с такой силой, что люди летят. Твоя миссия — никого не оставить без внимания. Создавать цепные реакции объятий по всему залу.',
+			cringe: 62,
+			spirit: 89
+		},
+		'chaos-hug-sparkler': {
+			title: 'Огненное Обнимание!',
+			icon: '🤪🔥',
+			description: 'Ты обнимаешь с горящими бенгальскими огнями, создавая световую цепь. Твоя миссия — распространять огонь через объятия. Безопасно, но эффектно передавать пламя.',
+			cringe: 67,
+			spirit: 87
+		},
+		'chaos-hug-champagne': {
+			title: 'Шампанское Цунами!',
+			icon: '🤪🥂',
+			description: 'Ты обнимаешь, обливая всех шампанским из открытых бутылок. Твоя миссия — создать всеобщее мокрое веселье. Превращать объятия в фонтаны игристого.',
+			cringe: 69,
+			spirit: 85
+		},
+		'chaos-hug-tangerine': {
+			title: 'Цитрусовый Обниматор!',
+			icon: '🤪🍊',
+			description: 'Ты обнимаешь, засовывая мандарины в карманы всем гостям. Твоя миссия — чтобы все ушли с цитрусовыми сюрпризами. Создавать мандариновые сюрпризы в объятиях.',
+			cringe: 64,
+			spirit: 86
+		},
+		'chaos-tv-tree': {
+			title: 'Телевизионный Апокалипсис!',
+			icon: '🤪📺',
+			description: 'Ты танцуешь так бешено перед телевизором, что он вот-вот упадет. Твоя миссия — затмить собой все телепередачи. Создавать альтернативное шоу прямо в гостиной.',
+			cringe: 71,
+			spirit: 83
+		},
+		'chaos-tv-sparkler': {
+			title: 'Экранный Вулкан!',
+			icon: '🤪📺',
+			description: 'Ты устраиваешь световое шоу перед телевизором, создавая помехи. Твоя миссия — сделать свой перформанс ярче любого телеконтента. Рисовать огнем картины поверх изображения.',
+			cringe: 73,
+			spirit: 81
+		},
+		'chaos-tv-champagne': {
+			title: 'Теле-Шампанский Фейерверк!',
+			icon: '🤪📺',
+			description: 'Ты открываешь шампанское в сторону телевизора, танцуя в брызгах. Твоя миссия — устроить праздник поверх праздника. Создавать спецэффекты, которых нет в эфире.',
+			cringe: 75,
+			spirit: 79
+		},
+		'chaos-tv-tangerine': {
+			title: 'Цитрусовый Телебедлам!',
+			icon: '🤪📺',
+			description: 'Ты кидаешь мандарины в телевизор, попадая в такт музыке. Твоя миссия — создать интерактивное шоу с цитрусами. Превращать просмотр в спортивное соревнование.',
+			cringe: 72,
+			spirit: 82
+		},
+		'chaos-social-tree': {
+			title: 'Виртуальный Ураган!',
+			icon: '🤪📱',
+			description: 'Ты ведешь безумные прямые эфиры, танцуя как одержимая. Твоя миссия — взорвать интернет своей энергией. Создавать контент, от которого у всех круглые глаза.',
+			cringe: 76,
+			spirit: 84
+		},
+		'chaos-social-sparkler': {
+			title: 'Онлайн-Извержение!',
+			icon: '🤪📱',
+			description: 'Ты стримишь танцы с бенгальскими огнями, рискуя поджечь всё. Твоя миссия — устроить самое опасное и зрелищное шоу. Привлекать внимание экстремальным контентом.',
+			cringe: 78,
+			spirit: 82
+		},
+		'chaos-social-champagne': {
+			title: 'Шампанский Интернет-Беспредел!',
+			icon: '🤪📱',
+			description: 'Ты ведешь прямые эфиры, открывая шампанское фонтанами. Твоя миссия — устроить виртуальный потоп. Создавать контент, который заставит всех убирать телефоны подальше.',
+			cringe: 80,
+			spirit: 80
+		},
+		'chaos-social-tangerine': {
+			title: 'Цитрусовый Хайп!',
+			icon: '🤪📱',
+			description: 'Ты делаешь безумные видео, кидаясь мандаринами в камеру. Твоя миссия — стать мемом за одну ночь. Создавать контент, который будут пересылать друг другу.',
+			cringe: 77,
+			spirit: 83
+		}
+	};
+	
+	prevBtn.style.display = 'none';
+	nextBtn.style.display = 'none';
+	modal.style.display = 'flex';
+	updateProgress();
+
+	prevBtn.style.order = '1';
+	nextBtn.style.order = '2';
+	
+	options.forEach(option => {
+		option.addEventListener('click', function() {
+			const step = this.closest('.quiz-step');
+			const stepIndex = parseInt(step.id.split('-')[1]) - 1;
+			const value = this.dataset.value;
+			
+			answers[stepIndex] = value;
+			
+			const stepOptions = step.querySelectorAll('.quiz-option');
+			stepOptions.forEach(opt => {
+				opt.style.background = '';
+				opt.style.borderColor = '';
+			});
+			
+			this.style.background = 'rgba(255, 182, 193, 0.3)';
+			this.style.borderColor = '#FFB6C1';
+			
+			nextBtn.style.display = 'flex';
+			
+			if (stepIndex === totalSteps - 1) {
+				nextBtn.innerHTML = '<img src="right-arrow_2.png" alt="Вперед" width="24" height="24">';
+			}
+		});
+	});
+	
+	nextBtn.addEventListener('click', function() {
+		if (currentStep < totalSteps - 1) {
+			if (answers[currentStep] !== null) {
+				quizSteps[currentStep].classList.remove('active');
+				currentStep++;
+				quizSteps[currentStep].classList.add('active');
+				
+				updateProgress();
+				
+				if (currentStep > 0) {
+					prevBtn.style.display = 'flex';
+				}
+				
+				if (answers[currentStep] !== null) {
+					nextBtn.style.display = 'flex';
+				} else {
+					nextBtn.style.display = 'none';
+				}
+			} else {
+				showNotification('Пожалуйста, выберите вариант ответа!');
+			}
+		} else {
+			if (answers[currentStep] !== null) {
+				showResult();
+			} else {
+				showNotification('Пожалуйста, выберите вариант ответа!');
+			}
+		}
+	});
+	
+	prevBtn.addEventListener('click', function() {
+		if (currentStep > 0) {
+			quizSteps[currentStep].classList.remove('active');
+			currentStep--;
+			quizSteps[currentStep].classList.add('active');
+			
+			updateProgress();
+			
+			if (currentStep === 0) {
+				prevBtn.style.display = 'none';
+			}
+			
+			if (answers[currentStep] !== null) {
+				nextBtn.style.display = 'flex';
+			} else {
+				nextBtn.style.display = 'none';
+			}
+		}
+	});
+	
+	function updateProgress() {
+		const progress = ((currentStep + 1) / totalSteps) * 100;
+		progressFill.style.width = `${progress}%`;
+		progressText.textContent = `Вопрос ${currentStep + 1} из ${totalSteps}`;
+	}
+	
+	function showResult() {
+		modal.style.display = 'none';
+		
+		const roleKey = `${answers[0]}-${answers[1]}-${answers[2]}`;
+		
+		let role;
+		if (roles[roleKey]) {
+			role = roles[roleKey];
+		} else {
+			const keys = Object.keys(roles);
+			const randomKey = keys[Math.floor(Math.random() * keys.length)];
+			role = roles[randomKey];
+		}
+		
+		document.getElementById('result-title').textContent = `Вы — ${role.title}`;
+		document.getElementById('result-icon').textContent = role.icon;
+		
+		const description = document.querySelector('.result-description');
+		description.innerHTML = `
+			<p><strong>Ваша сверхспособность:</strong> ${role.description.split('. ')[0]}.</p>
+			<p><strong>Ваша миссия:</strong> ${role.description.split('. ')[1]}.</p>
+			<p><strong>Секретное умение:</strong> ${role.description.split('. ')[2]}</p>
+		`;
+		
+		setTimeout(() => {
+			document.getElementById('cringe-level').style.width = `${role.cringe}%`;
+			document.getElementById('spirit-level').style.width = `${role.spirit}%`;
+		}, 500);
+		
+		resultSection.classList.remove('hidden');
+		mainContent.classList.remove('hidden');
+		
+		resultSection.style.opacity = '0';
+		resultSection.style.transform = 'translateY(30px)';
+		resultSection.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+		
+		setTimeout(() => {
+			resultSection.style.opacity = '1';
+			resultSection.style.transform = 'translateY(0)';
+		}, 100);
+	}
+	
+	function showNotification(message) {
+		const notification = document.createElement('div');
+		notification.className = 'notification';
+		notification.textContent = message;
+		notification.style.cssText = `
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			background: rgba(255, 182, 193, 0.9);
+			color: white;
+			padding: 15px 25px;
+			border-radius: 10px;
+			z-index: 1001;
+			animation: slideIn 0.3s ease;
+		`;
+		
+		document.body.appendChild(notification);
+		
+		setTimeout(() => {
+			notification.style.animation = 'slideOut 0.3s ease';
+			setTimeout(() => {
+				document.body.removeChild(notification);
+			}, 300);
+		}, 3000);
+		
+		const notificationStyle = document.createElement('style');
+		notificationStyle.textContent = `
+			@keyframes slideIn {
+				from { transform: translateX(100%); opacity: 0; }
+				to { transform: translateX(0); opacity: 1; }
+			}
+			@keyframes slideOut {
+				from { transform: translateX(0); opacity: 1; }
+				to { transform: translateX(100%); opacity: 0; }
+			}
+		`;
+		document.head.appendChild(notificationStyle);
+	}
+}
+
+function initMemeGenerator() {
+	const memeGenerator = document.querySelector('.meme-generator-container');
+	if (!memeGenerator) return;
+	
+	memeGenerator.style.opacity = '0';
+	memeGenerator.style.transform = 'translateY(30px)';
+	memeGenerator.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+	
+	setTimeout(() => {
+		memeGenerator.style.opacity = '1';
+		memeGenerator.style.transform = 'translateY(0)';
+	}, 300);
+	
+	const imageOptions = document.querySelectorAll('.image-option:not(.custom-image)');
+	const customImageOption = document.querySelector('.custom-image');
+	const customImageUpload = document.getElementById('custom-image-upload');
+	const topTextInput = document.getElementById('top-text');
+	const bottomTextInput = document.getElementById('bottom-text');
+	const randomTextBtn = document.getElementById('random-text');
+	const memeImage = document.getElementById('meme-image');
+	const previewTopText = document.getElementById('preview-top-text');
+	const previewBottomText = document.getElementById('preview-bottom-text');
+	const newMemeBtn = document.getElementById('new-meme');
+	const topCharCount = topTextInput.nextElementSibling;
+	const bottomCharCount = bottomTextInput.nextElementSibling;
+	
+	const randomTopTexts = [
+		"С НОВЫМ ГОДОМ ЖЕНЯ!",
+		"2026 УЖЕ ЗДЕСЬ",
+		"ШАМПАНСКОЕ И ТАНЦЫ",
+		"ЁЛКА В ОГНЯХ",
+		"ГДЕ МОИ ПОДАРКИ?",
+		"ПОРА ТАНЦЕВАТЬ",
+		"МАНДАРИНЫ И УЛЫБКИ",
+		"НОВОГОДНЕЕ ЧУДО",
+		"ПРАЗДНИК НАЧИНАЕТСЯ",
+		"БУДЕТ ЖАРКО НА ДАНСФЛООРЕ"
+	];
+	
+	const randomBottomTexts = [
+		"А ТЫ УЖЕ ТАНЦУЕШЬ?",
+		"ПРИВЕТ, 2026!",
+		"НОВЫЕ МЕЧТЫ ЖДУТ",
+		"СНОВА ДЕД МОРОЗ",
+		"ВСЁ БУДЕТ КЛАССНО!",
+		"БУДЕТ ЛУЧШЕ!",
+		"ПРАЗДНИК В ПОЛНОМ РАЗГАРЕ",
+		"СНОВА НА ТАНЦПОЛЕ",
+		"ВЕСЕЛЬЕ ПРОДОЛЖАЕТСЯ",
+		"СЧАСТЬЯ И ТАНЦЕВ"
+	];
+	
+	let currentImage = '';
+	let currentTopText = '';
+	let currentBottomText = '';
+	
+	updateCharCount(topTextInput, topCharCount);
+	updateCharCount(bottomTextInput, bottomCharCount);
+	
+	imageOptions.forEach(option => {
+		option.addEventListener('click', function() {
+			imageOptions.forEach(opt => opt.classList.remove('active'));
+			customImageOption.classList.remove('active');
+			
+			this.classList.add('active');
+			
+			const imageName = this.dataset.image;
+			currentImage = imageName;
+			memeImage.style.backgroundImage = `url(${imageName})`;
+		});
+	});
+	
+	customImageOption.addEventListener('click', function() {
+		customImageUpload.click();
+	});
+	
+	customImageUpload.addEventListener('change', function(e) {
+		if (e.target.files && e.target.files[0]) {
+			const file = e.target.files[0];
+			const reader = new FileReader();
+			
+			reader.onload = function(event) {
+				imageOptions.forEach(opt => opt.classList.remove('active'));
+				customImageOption.classList.add('active');
+				
+				currentImage = event.target.result;
+				memeImage.style.backgroundImage = `url(${event.target.result})`;
+			};
+			
+			reader.readAsDataURL(file);
+		}
+	});
+	
+	topTextInput.addEventListener('input', function() {
+		currentTopText = this.value;
+		previewTopText.textContent = currentTopText.toUpperCase();
+		updateCharCount(this, topCharCount);
+	});
+	
+	bottomTextInput.addEventListener('input', function() {
+		currentBottomText = this.value;
+		previewBottomText.textContent = currentBottomText.toUpperCase();
+		updateCharCount(this, bottomCharCount);
+	});
+	
+	randomTextBtn.addEventListener('click', function() {
+		const randomTop = randomTopTexts[Math.floor(Math.random() * randomTopTexts.length)];
+		const randomBottom = randomBottomTexts[Math.floor(Math.random() * randomBottomTexts.length)];
+		
+		topTextInput.value = randomTop;
+		bottomTextInput.value = randomBottom;
+		
+		currentTopText = randomTop;
+		currentBottomText = randomBottom;
+		
+		previewTopText.textContent = currentTopText.toUpperCase();
+		previewBottomText.textContent = currentBottomText.toUpperCase();
+		
+		updateCharCount(topTextInput, topCharCount);
+		updateCharCount(bottomTextInput, bottomCharCount);
+		
+		this.style.transform = 'scale(0.95)';
+		setTimeout(() => {
+			this.style.transform = 'scale(1)';
+		}, 150);
+	});
+	
+	newMemeBtn.addEventListener('click', function() {
+		imageOptions.forEach(opt => opt.classList.remove('active'));
+		customImageOption.classList.remove('active');
+		customImageUpload.value = '';
+		
+		topTextInput.value = '';
+		bottomTextInput.value = '';
+		
+		currentImage = '';
+		currentTopText = '';
+		currentBottomText = '';
+		
+		memeImage.style.backgroundImage = '';
+		previewTopText.textContent = '';
+		previewBottomText.textContent = '';
+		
+		updateCharCount(topTextInput, topCharCount);
+		updateCharCount(bottomTextInput, bottomCharCount);
+		
+		this.style.transform = 'scale(0.95)';
+		setTimeout(() => {
+			this.style.transform = 'scale(1)';
+		}, 150);
+		
+		showMemeNotification('Готово! Создавайте новый мем!');
+	});
+	
+	function updateCharCount(input, counter) {
+		const count = input.value.length;
+		const max = input.maxLength;
+		counter.textContent = `${count}/${max}`;
+		
+		if (count > max * 0.8) {
+			counter.style.color = '#FFB6C1';
+		} else {
+			counter.style.color = 'rgba(255, 255, 255, 0.7)';
+		}
+	}
+	
+	function showMemeNotification(message) {
+		const existingNotification = document.querySelector('.meme-notification');
+		if (existingNotification) {
+			existingNotification.remove();
+		}
+		
+		const notification = document.createElement('div');
+		notification.className = 'meme-notification';
+		notification.textContent = message;
+		notification.style.cssText = `
+			position: fixed;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%) translateY(-100%);
+			background: rgba(255, 182, 193, 0.9);
+			color: #1b2735;
+			padding: 15px 30px;
+			border-radius: 10px;
+			z-index: 1001;
+			font-weight: 600;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+			animation: memeNotificationSlideIn 0.3s ease forwards;
+			max-width: 90%;
+			text-align: center;
+		`;
+		
+		document.body.appendChild(notification);
+		
+		const style = document.createElement('style');
+		style.textContent = `
+			@keyframes memeNotificationSlideIn {
+				from {
+					transform: translateX(-50%) translateY(-100%);
+					opacity: 0;
+				}
+				to {
+					transform: translateX(-50%) translateY(0);
+					opacity: 1;
+				}
+			}
+			@keyframes memeNotificationSlideOut {
+				from {
+					transform: translateX(-50%) translateY(0);
+					opacity: 1;
+				}
+				to {
+					transform: translateX(-50%) translateY(-100%);
+					opacity: 0;
+				}
+			}
+		`;
+		document.head.appendChild(style);
+		
+		setTimeout(() => {
+			notification.style.animation = 'memeNotificationSlideOut 0.3s ease forwards';
+			setTimeout(() => {
+				notification.remove();
+				style.remove();
+			}, 300);
+		}, 3000);
+	}
+	
+	if (imageOptions.length > 0) {
+		imageOptions[0].click();
+	}
+}
